@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>DE0 Solid WebGL</title>
+  <style>body{display:flex;justify-content:center;padding:20px}canvas{border:1px solid #333}</style>
+  <script src="helper.js"></script>
+  <script src="IOHandler.js"></script>
+  <script src="data.js"></script>
+  <script src="main.js"></script>
+</head>
+<body onload="main()">
+  <canvas id="myCanvas" width="900" height="600"></canvas>
+
+  <!-- Vertex shader (pakai normal transform supaya lighting berefek pas rotasi) -->
+  <script id="vertexShaderCode" type="notjs">
+    attribute vec3 aPosition;
+    attribute vec3 aColor;
+    attribute vec3 aNormal;
+
+    varying vec3 vColor;
+    varying float vLight;
+
+    uniform mat4 uFormMatrix;
+
+    void main(){
+      gl_Position = uFormMatrix * vec4(aPosition, 1.0);
+
+      // transform normal dengan matriks model (w = 0 untuk vektor)
+      vec3 normal = normalize((uFormMatrix * vec4(aNormal, 0.0)).xyz);
+
+      vec3 lightDir = normalize(vec3(0.5, 1.0, 1.0));
+      vLight = max(dot(normal, lightDir), 0.0);
+
+      vColor = aColor;
+    }
+  </script>
+</body>
+</html>
