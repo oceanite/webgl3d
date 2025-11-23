@@ -1,148 +1,98 @@
-// ----------------------
-// Helper bikin balok
-// ----------------------
-function createBlock(x1, y1, x2, y2, depth) {
-    const verts = [];
+var vertices = [
+    // Batang kiri huruf D
+    -0.9, -0.5, 0.1,
+    -0.8, -0.5, 0.1,
+    -0.8,  0.5, 0.1,
 
-    // depan
-    verts.push([x1,y1, depth],[x2,y1, depth],[x2,y2, depth]);
-    verts.push([x1,y1, depth],[x2,y2, depth],[x1,y2, depth]);
+    -0.9, -0.5, 0.1,
+    -0.8,  0.5, 0.1,
+    -0.9,  0.5, 0.1,
 
-    // belakang
-    verts.push([x1,y1,-depth],[x2,y2,-depth],[x2,y1,-depth]);
-    verts.push([x1,y1,-depth],[x1,y2,-depth],[x2,y2,-depth]);
+    // Bagian atas lengkung D
+    -0.8,  0.5, 0.1,
+    -0.6,  0.4, 0.1,
+    -0.6,  0.5, 0.1,
 
-    // kiri
-    verts.push([x1,y1, depth],[x1,y2, depth],[x1,y2,-depth]);
-    verts.push([x1,y1, depth],[x1,y2,-depth],[x1,y1,-depth]);
+    -0.8,  0.5, 0.1,
+    -0.6,  0.4, 0.1,
+    -0.8,  0.4, 0.1,
 
-    // kanan
-    verts.push([x2,y1, depth],[x2,y2,-depth],[x2,y2, depth]);
-    verts.push([x2,y1, depth],[x2,y1,-depth],[x2,y2,-depth]);
+    // Bagian bawah lengkung D
+    -0.8, -0.5, 0.1,
+    -0.6, -0.4, 0.1,
+    -0.6, -0.5, 0.1,
 
-    // atas
-    verts.push([x1,y2, depth],[x2,y2, depth],[x2,y2,-depth]);
-    verts.push([x1,y2, depth],[x2,y2,-depth],[x1,y2,-depth]);
+    -0.8, -0.5, 0.1,
+    -0.6, -0.4, 0.1,
+    -0.8, -0.4, 0.1,
 
-    // bawah
-    verts.push([x1,y1, depth],[x2,y1,-depth],[x2,y1, depth]);
-    verts.push([x1,y1, depth],[x1,y1,-depth],[x2,y1,-depth]);
+    // Sisi kanan tipis
+    -0.6, -0.4, 0.1,
+    -0.55, -0.4, 0.1,
+    -0.55,  0.4, 0.1,
 
-    return verts;
-}
+    -0.6, -0.4, 0.1,
+    -0.55,  0.4, 0.1,
+    -0.6,  0.4, 0.1
 
-// ----------------------
-// Helper bikin ring (untuk angka 0 berlubang)
-// ----------------------
-function createRing(cx, cy, rxOuter, ryOuter, rxInner, ryInner, n, depth) {
-    let verts = [];
+    // Batang vertikal kiri
+-0.45, -0.5, 0.1,
+-0.35, -0.5, 0.1,
+-0.35,  0.5, 0.1,
 
-    // depan
-    for (let i=0; i<n; i++) {
-        let t1 = (i/n)*2*Math.PI;
-        let t2 = ((i+1)/n)*2*Math.PI;
-        let x1o = cx+rxOuter*Math.cos(t1), y1o = cy+ryOuter*Math.sin(t1);
-        let x2o = cx+rxOuter*Math.cos(t2), y2o = cy+ryOuter*Math.sin(t2);
-        let x1i = cx+rxInner*Math.cos(t1), y1i = cy+ryInner*Math.sin(t1);
-        let x2i = cx+rxInner*Math.cos(t2), y2i = cy+ryInner*Math.sin(t2);
-        verts.push([x1o,y1o, depth],[x2o,y2o, depth],[x2i,y2i, depth]);
-        verts.push([x1o,y1o, depth],[x2i,y2i, depth],[x1i,y1i, depth]);
-    }
+-0.45, -0.5, 0.1,
+-0.35,  0.5, 0.1,
+-0.45,  0.5, 0.1,
 
-    // belakang
-    for (let i=0; i<n; i++) {
-        let t1 = (i/n)*2*Math.PI;
-        let t2 = ((i+1)/n)*2*Math.PI;
-        let x1o = cx+rxOuter*Math.cos(t1), y1o = cy+ryOuter*Math.sin(t1);
-        let x2o = cx+rxOuter*Math.cos(t2), y2o = cy+ryOuter*Math.sin(t2);
-        let x1i = cx+rxInner*Math.cos(t1), y1i = cy+ryInner*Math.sin(t1);
-        let x2i = cx+rxInner*Math.cos(t2), y2i = cy+ryInner*Math.sin(t2);
-        verts.push([x1o,y1o,-depth],[x2i,y2i,-depth],[x2o,y2o,-depth]);
-        verts.push([x1o,y1o,-depth],[x1i,y1i,-depth],[x2i,y2i,-depth]);
-    }
+// Garis horizontal atas
+-0.35,  0.4, 0.1,
+-0.15,  0.4, 0.1,
+-0.15,  0.5, 0.1,
 
-    // sisi luar
-    for (let i=0; i<n; i++) {
-        let t1 = (i/n)*2*Math.PI;
-        let t2 = ((i+1)/n)*2*Math.PI;
-        let x1 = cx+rxOuter*Math.cos(t1), y1 = cy+ryOuter*Math.sin(t1);
-        let x2 = cx+rxOuter*Math.cos(t2), y2 = cy+ryOuter*Math.sin(t2);
-        verts.push([x1,y1, depth],[x2,y2, depth],[x2,y2,-depth]);
-        verts.push([x1,y1, depth],[x2,y2,-depth],[x1,y1,-depth]);
-    }
+-0.35,  0.4, 0.1,
+-0.15,  0.5, 0.1,
+-0.35,  0.5, 0.1,
 
-    // sisi dalam
-    for (let i=0; i<n; i++) {
-        let t1 = (i/n)*2*Math.PI;
-        let t2 = ((i+1)/n)*2*Math.PI;
-        let x1 = cx+rxInner*Math.cos(t1), y1 = cy+ryInner*Math.sin(t1);
-        let x2 = cx+rxInner*Math.cos(t2), y2 = cy+ryInner*Math.sin(t2);
-        verts.push([x1,y1, depth],[x2,y2,-depth],[x2,y2, depth]);
-        verts.push([x1,y1, depth],[x1,y1,-depth],[x2,y2,-depth]);
-    }
+// Garis horizontal tengah
+-0.35, -0.05, 0.1,
+-0.2,  -0.05, 0.1,
+-0.2,   0.05, 0.1,
 
-    return verts;
-}
+-0.35, -0.05, 0.1,
+-0.2,   0.05, 0.1,
+-0.35,  0.05, 0.1,
 
-// ----------------------
-// Bentuk huruf
-// ----------------------
-let positions = [];
+// Garis horizontal bawah
+-0.35, -0.5, 0.1,
+-0.15, -0.5, 0.1,
+-0.15, -0.4, 0.1,
 
-// D
-positions = positions.concat(createBlock(-0.9,-0.5,-0.8,0.5,0.1)); // batang kiri
-positions = positions.concat(createBlock(-0.8,0.4,-0.6,0.5,0.1)); // atas
-positions = positions.concat(createBlock(-0.8,-0.5,-0.6,-0.4,0.1)); // bawah
-positions = positions.concat(createBlock(-0.6,-0.4,-0.55,0.4,0.1)); // sisi kanan tipis
+-0.35, -0.5, 0.1,
+-0.15, -0.4, 0.1,
+-0.35, -0.4, 0.1,
 
-// E
-positions = positions.concat(createBlock(-0.45,-0.5,-0.35,0.5,0.1)); // batang kiri
-positions = positions.concat(createBlock(-0.35,0.4,-0.15,0.5,0.1)); // atas
-positions = positions.concat(createBlock(-0.35,-0.05,-0.2,0.05,0.1)); // tengah
-positions = positions.concat(createBlock(-0.35,-0.5,-0.15,-0.4,0.1)); // bawah
+    
+];
 
-// 0 (donut)
-positions = positions.concat(createRing(0.1, 0.0, 0.25, 0.5, 0.1, 0.25, 60, 0.1));
 
-// ----------------------
-// Flatten array
-// ----------------------
-let flatPositions = [];
-for (let v of positions) flatPositions.push(...v);
+var lines = [
+    0.0, 0.0, 0.5,    //titik A 0
+    0.5, 0.0, 0.5,    //titik B 1
 
-// ----------------------
-// Warna
-// ----------------------
-let colors = [];
-for (let i=0; i<flatPositions.length/3; i++) {
-    let z = flatPositions[i*3+2];
-    if (Math.abs(z-0.1)<1e-5 || Math.abs(z+0.1)<1e-5) {
-        // depan / belakang
-        colors.push(0.2+0.6*Math.random(), 0.2+0.6*Math.random(), 0.8);
-    } else {
-        // sisi samping lebih gelap
-        colors.push(0.3, 0.3, 0.3);
-    }
-}
+    0.5, 0.0, 0.5,    //titik B 1
+    0.5, 0.0, 0.0,    //titik C 2
 
-// ----------------------
-// Normal sederhana (ke depan aja, biar lighting basic jalan)
-// ----------------------
-let normals = [];
-for (let i=0; i<flatPositions.length/3; i++) {
-    normals.push(0,0,1);
-}
+    0.5, 0.0, 0.0,    //titik C 2
+    0.0, 0.0, 0.0,    //titik D 3
 
-// ----------------------
-// Indices
-// ----------------------
-let indices = [];
-for (let i=0; i<flatPositions.length/3; i++) indices.push(i);
+    0.0, 0.0, 0.0,    //titik D 3
+    0.0, 0.0, 0.5,    //titik A 0
 
-// ----------------------
-// Export
-// ----------------------
-window.lines   = flatPositions;
-window.colors  = colors;
-window.normals = normals;
-window.indices = indices;
+    0.0, 0.0, 0.5,    //titik A 0
+    0.25, 0.5, 0.25,   //titik E 4
+
+    0.5, 0.0, 0.5,    //titik B 1
+    0.25, 0.5, 0.25,   //titik E 4
+
+    0.5, 0.0, 0.0,    //titik C 2  
+    0.25, 0.5, 0.25,   //titik E 4
