@@ -1,11 +1,6 @@
-// =====================
-// DATA 3D: HURUF D, E, DAN ANGKA 0 (DENGAN SISI TEBAL)
-// =====================
 
 const vertices = [
-    // =====================
     // Huruf D
-    // =====================
 
     // Garis vertikal kiri D (1)
 
@@ -255,7 +250,7 @@ for (let i = 0; i < segmen; i++) {
         x1o, y1o, 0.1,  x2o, y2o, 0.1,  x2o, y2o, -0.1,
         x1o, y1o, 0.1,  x2o, y2o, -0.1,  x1o, y1o, -0.1
     );
-    // NORMAL SISI LUAR (Menunjuk keluar, 6 vertices)
+    // sisi luar normal (menunjuk ke luar, 6 vertices)
     const nOuterX = (x1o + x2o) / 2 - xCenter;
     const nOuterY = (y1o + y2o) / 2 - yCenter;
     const nOuterLen = Math.sqrt(nOuterX * nOuterX + nOuterY * nOuterY);
@@ -283,9 +278,7 @@ for (let i = 0; i < segmen; i++) {
 }
 
 
-// =====================
-// WARNA ACAK UNTUK SEMUA PERMUKAAN (termasuk samping)
-// =====================
+//warna
 const colors = [];
 for (let i = 0; i < vertices.length / 3; i++) {
     colors.push(
@@ -295,13 +288,10 @@ for (let i = 0; i < vertices.length / 3; i++) {
     );
 }
 
-// =====================
-// INDEKS
-// =====================
-// Kita menggunakan drawArrays, jadi indeks hanyalah urutan angka
+//indeks
 const indices = Array.from({ length: vertices.length / 3 }, (_, i) => i);
 
 window.vertices = vertices;
 window.colors = colors;
-window.normals = normals; // Sekarang array normals sudah terisi dengan benar
+window.normals = normals; 
 window.indices = indices;
